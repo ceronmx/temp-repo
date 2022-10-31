@@ -31,12 +31,14 @@ app.post('/', async (req, res) => {
     const response = await fetch(putUrl, requestOptions)
 
     // Errors seems to be coming as XML so trying to parse it will throw an error
-    const result = await response.json()
+    const result = await response.text()
+    console.log({result})
 
     // If no error is thrown, the response is a JSON object and then we'll get the Etag here
     res.status(200).send({ok: true, ...result})
 
   }catch(err){
+    console.log(JSON.stringify(err))
     console.log('Something went wrong: ', err)
     res.status(500).send({ok: false, err})
   }
